@@ -1,4 +1,2 @@
 -r ./utils/requirements.txt
 gitpython>=3.1.41
-requests~=2.31.0
-jira~=3.6.0
