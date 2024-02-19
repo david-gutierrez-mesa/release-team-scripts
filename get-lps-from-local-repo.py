@@ -2,6 +2,8 @@
 import sys
 import git
 
+from liferay_utils.jira_utils.jira_helpers import LIFERAY_JIRA_BROWSE_URL
+from utils.liferay_utils.jira_utils.jira_liferay import get_jira_connection
 
 def main(repo_path, start_hash, end_hash):
     liferay_portal_ee_repo = git.Repo(repo_path)
@@ -13,6 +15,7 @@ def main(repo_path, start_hash, end_hash):
     individual_commit_hashes = of_interest.split('\n')
     lps_list = []
     revered_list = []
+    no_bugs_list = []
 
     for commit_hash in individual_commit_hashes:
         message = liferay_portal_ee_repo.commit(commit_hash).message
@@ -22,10 +25,18 @@ def main(repo_path, start_hash, end_hash):
         elif (lps not in lps_list) and (lps.startswith('LPS-') or lps.startswith('LPD-')):
             lps_list.append(lps)
 
+    for lps in lps_list:
+        lps_type = jira.issue(lps, fields='issuetype').fields.issuetype
+        if lps_type.name != 'Bug':
+            lps_list.remove(lps)
+            no_bugs_list.append(LIFERAY_JIRA_BROWSE_URL + lps)
+
     print(" List of Stories:")
     print(*lps_list, sep="\n")
     print("\n\n List of reverted commits:")
     print(*revered_list, sep="\n")
+    print("\n\n List of issues that are not bugs:")
+    print(*no_bugs_list, sep="\n")
 
 
 if __name__ == '__main__':
