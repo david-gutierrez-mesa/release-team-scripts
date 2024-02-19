@@ -1,6 +1,9 @@
 #!/usr/bin/env python
+import os
 import sys
 import git
+
+sys.path.append(os.path.join(sys.path[0], 'utils'))
 
 from utils.liferay_utils.jira_utils.jira_helpers import LIFERAY_JIRA_BROWSE_URL
 from utils.liferay_utils.jira_utils.jira_helpers import initialize_subtask_patch_release
