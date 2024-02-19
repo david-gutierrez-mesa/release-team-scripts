@@ -2,7 +2,7 @@
 import sys
 import git
 
-from liferay_utils.jira_utils.jira_helpers import LIFERAY_JIRA_BROWSE_URL
+from utils.liferay_utils.jira_utils.jira_helpers import LIFERAY_JIRA_BROWSE_URL
 from utils.liferay_utils.jira_utils.jira_helpers import initialize_subtask_patch_release
 from utils.liferay_utils.jira_utils.jira_liferay import get_jira_connection
 
