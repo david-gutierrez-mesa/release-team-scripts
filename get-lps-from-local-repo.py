@@ -2,6 +2,7 @@
 import os
 import sys
 import git
+from jira import JIRAError
 
 sys.path.append(os.path.join(sys.path[0], 'utils'))
 
@@ -32,7 +33,11 @@ def main(repo_path, start_hash, end_hash, lpd_ticket=''):
             lps_list.append(lps)
 
     for lps in lps_list:
-        lps_type = jira.issue(lps, fields='issuetype').fields.issuetype
+        try:
+            lps_type = jira.issue(lps, fields='issuetype').fields.issuetype
+        except JIRAError as err:
+            print("Error for ticket: " + lps + ": " + err.args[0])
+            continue
         if lps_type.name != 'Bug':
             lps_list.remove(lps)
             no_bugs_list.append(LIFERAY_JIRA_BROWSE_URL + lps)
