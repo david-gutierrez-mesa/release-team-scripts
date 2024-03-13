@@ -36,6 +36,7 @@ def main(repo_path, start_hash, end_hash, lpd_ticket=''):
         try:
             lps_type = jira.issue(lps, fields='issuetype').fields.issuetype
         except JIRAError as err:
+            lps_list.remove(lps)
             print("Error for ticket: " + lps + ": " + err.args[0])
             continue
         if lps_type.name != 'Bug':
