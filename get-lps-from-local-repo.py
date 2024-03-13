@@ -49,11 +49,15 @@ def main(repo_path, start_hash, end_hash, lpd_ticket=''):
         for lps_id in lps_list:
             sub_task = initialize_subtask_patch_release(parent_lps, lps_id)
             new_issue = jira.create_issue(fields=sub_task)
-            jira.create_issue_link(
-                type="relates",
-                inwardIssue=new_issue.key,
-                outwardIssue=lps_id,
-            )
+            try:
+                jira.create_issue_link(
+                    type="relates",
+                    inwardIssue=new_issue.key,
+                    outwardIssue=lps_id,
+                )
+            except JIRAError as err:
+                print("Error creating ticket: " + lps_id + ": " + err.args[0])
+                continue
 
     print(" List of Stories:")
     print(*lps_list, sep="\n")
