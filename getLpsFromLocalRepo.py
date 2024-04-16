@@ -11,7 +11,7 @@ from utils.liferay_utils.jira_utils.jira_helpers import initialize_subtask_patch
 from utils.liferay_utils.jira_utils.jira_liferay import get_jira_connection
 
 
-def main(repo_path, start_hash, end_hash, lpd_ticket=''):
+def get_lps_from_local_repo(repo_path, start_hash, end_hash, lpd_ticket=''):
     liferay_portal_ee_repo = git.Repo(repo_path)
 
     print("Retrieving git info ...")
@@ -92,4 +92,4 @@ if __name__ == '__main__':
     except IndexError:
         lpd = ""
 
-    main(path, first_hash, final_hash, lpd)
+    get_lps_from_local_repo(path, first_hash, final_hash, lpd)
