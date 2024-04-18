@@ -11,7 +11,7 @@ from utils.liferay_utils.jira_utils.jira_helpers import initialize_subtask_patch
 from utils.liferay_utils.jira_utils.jira_liferay import get_jira_connection
 
 
-def get_lps_from_local_repo(repo_path, start_hash, end_hash, lpd_ticket=''):
+def get_lps_from_local_repo(jira, repo_path, start_hash, end_hash, lpd_ticket=''):
     liferay_portal_ee_repo = git.Repo(repo_path)
 
     print("Retrieving git info ...")
@@ -22,14 +22,13 @@ def get_lps_from_local_repo(repo_path, start_hash, end_hash, lpd_ticket=''):
     lps_list = []
     revered_list = []
     no_bugs_list = []
-    jira = get_jira_connection()
 
     for commit_hash in individual_commit_hashes:
         message = liferay_portal_ee_repo.commit(commit_hash).message
         lps = message.split(' ')[0].split('\n')[0]
         if message.lower().find('revert') != -1:
             revered_list.append('https://github.com/liferay/liferay-portal-ee/commit/' + commit_hash)
-        elif (lps not in lps_list) and (lps.startswith('LPS-') or lps.startswith('LPD-')):
+        elif (lps not in lps_list) and (lps.startswith('LPS-') or lps.startswith('LPD-') or lps.startswith('COMMERCE-')):
             lps_list.append(lps)
 
     for lps in lps_list:
@@ -92,4 +91,5 @@ if __name__ == '__main__':
     except IndexError:
         lpd = ""
 
-    get_lps_from_local_repo(path, first_hash, final_hash, lpd)
+    jira_connection = get_jira_connection()
+    get_lps_from_local_repo(jira_connection, path, first_hash, final_hash, lpd)
