@@ -11,10 +11,10 @@ from utils.liferay_utils.jira_utils.jira_helpers import initialize_subtask_patch
 from utils.liferay_utils.jira_utils.jira_liferay import get_jira_connection
 
 
-def get_lps_from_local_repo(jira, repo_path, start_hash, end_hash, lpd_ticket=''):
+def get_lps_from_local_repo(jira, repo_path, start_hash, end_hash, release='', lpd_ticket=''):
     liferay_portal_ee_repo = git.Repo(repo_path)
 
-    print("Retrieving git info ...")
+    print("Retrieving git info for Release " + release + "...")
 
     of_interest = liferay_portal_ee_repo.git.log(start_hash + ".." + end_hash, "--pretty=format:%H")
 
@@ -47,7 +47,7 @@ def get_lps_from_local_repo(jira, repo_path, start_hash, end_hash, lpd_ticket=''
 
         parent_lps = jira.issue(lpd_ticket, fields=['id'])
         for lps_id in lps_list:
-            sub_task = initialize_subtask_patch_release(parent_lps, lps_id)
+            sub_task = initialize_subtask_patch_release(parent_lps, lps_id + ' - ' + release)
             new_issue = jira.create_issue(fields=sub_task)
             try:
                 jira.create_issue_link(
@@ -87,9 +87,14 @@ if __name__ == '__main__':
         exit()
 
     try:
-        lpd = sys.argv[4]
+        next_release = sys.argv[4]
+    except IndexError:
+        next_release = ""
+
+    try:
+        lpd = sys.argv[5]
     except IndexError:
         lpd = ""
 
     jira_connection = get_jira_connection()
-    get_lps_from_local_repo(jira_connection, path, first_hash, final_hash, lpd)
+    get_lps_from_local_repo(jira_connection, path, first_hash, final_hash, next_release, lpd)
