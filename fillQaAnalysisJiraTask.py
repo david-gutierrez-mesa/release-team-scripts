@@ -13,7 +13,7 @@ def fill_qa_analysis_jira_task(jira, repo_path, start_hash, end_hash, release_ve
         jql = 'project = "PUBLIC - Liferay Product Delivery" AND summary ~ "' + release_version + ' QA Analysis"'
         qa_analysis_tasks = get_all_issues(jira, jql, ["key"])
         if len(qa_analysis_tasks) == 1:
-            get_lps_from_local_repo(jira, repo_path, start_hash, end_hash, qa_analysis_tasks[0].key)
+            get_lps_from_local_repo(jira, repo_path, start_hash, end_hash, release_version, qa_analysis_tasks[0].key)
 
 
 if __name__ == '__main__':
