@@ -15,8 +15,7 @@ def fill_qa_analysis_jira_task(jira, repo_path, start_hash, end_hash, release_ve
         qa_analysis_tasks = get_all_issues(jira, jql, ["key"])
         if len(qa_analysis_tasks) == 1:
             parent_task = qa_analysis_tasks[0].key
-            print("Parent task key: " + parent_task)
-            # get_lps_from_local_repo(jira, repo_path, start_hash, end_hash, release_version, parent_task)
+            get_lps_from_local_repo(jira, repo_path, start_hash, end_hash, release_version, parent_task)
             file_name = "PARENT_TASK.txt"
             with open(file_name, 'w') as archivo:
                 archivo.write(parent_task)
