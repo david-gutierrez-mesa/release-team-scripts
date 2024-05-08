@@ -17,8 +17,9 @@ def fill_qa_analysis_jira_task(jira, repo_path, start_hash, end_hash, release_ve
             parent_task = qa_analysis_tasks[0].key
             print("Parent task key: " + parent_task)
             # get_lps_from_local_repo(jira, repo_path, start_hash, end_hash, release_version, parent_task)
-            os.environ["PARENT_TASK"] = parent_task
-            print(os.environ.get("PARENT_TASK"))
+            file_name = "PARENT_TASK.txt"
+            with open(file_name, 'w') as archivo:
+                archivo.write(parent_task)
 
 
 if __name__ == '__main__':
