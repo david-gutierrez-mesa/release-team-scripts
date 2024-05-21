@@ -28,7 +28,7 @@ def get_lps_from_local_repo(jira, repo_path, start_hash, end_hash, release='', l
         lps = message.split(' ')[0].split('\n')[0]
         if message.lower().find('revert') != -1:
             revered_list.append('https://github.com/liferay/liferay-portal-ee/commit/' + commit_hash)
-        elif (lps not in lps_list) and (lps.startswith('LPS-') or lps.startswith('LPD-') or lps.startswith('COMMERCE-')):
+        elif (lps not in lps_list) and ('-' in lps):
             lps_list.append(lps)
 
     for lps in lps_list:
