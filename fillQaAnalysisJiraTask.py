@@ -12,8 +12,8 @@ from utils.liferay_utils.jira_utils.jira_liferay import get_jira_connection
 def fill_qa_analysis_jira_task(jira, repo_path, start_hash, end_hash, release_version=''):
     if release_version:
         print("Get task from " + release_version)
-        qa_analysis_tasks = get_all_issues(jira, jql, ["key"])
         jql = Filter.QA_Analysis_for_release.format(release_version=release_version)
+        qa_analysis_tasks = get_all_issues(jira, jql, ["key", "status"])
         if len(qa_analysis_tasks) == 1:
             parent_task = qa_analysis_tasks[0].key
             get_lps_from_local_repo(jira, repo_path, start_hash, end_hash, release_version, parent_task)
