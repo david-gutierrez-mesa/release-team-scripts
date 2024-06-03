@@ -2,7 +2,7 @@
 import os
 import sys
 
-from release_constants import URLs, Filter, Roles
+from release_constants import Filter, Roles
 from utils.liferay_utils.jira_utils.jira_constants import Status, Transition
 from utils.liferay_utils.jira_utils.jira_helpers import get_all_issues
 
