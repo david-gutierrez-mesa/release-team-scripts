@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import os
 import sys
 
 from getLpsFromLocalRepo import get_lps_from_local_repo
