@@ -5,6 +5,7 @@ class FileName:
 class Filter:
     QA_Analysis_for_release = ('project = "PUBLIC - Liferay Product Delivery" AND summary ~ "{release_version} QA '
                                'Analysis"')
+    Build_for_release = 'project = "PUBLIC - Liferay Product Delivery" AND summary ~ "{release_version} Build"'
 
 
 class Roles:
