@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 import os
 import sys
-import git
-from jira import JIRAError
 
 from liferay_utils.jira_utils.jira_constants import Transition
 from release_constants import URLs, Filter, Roles
