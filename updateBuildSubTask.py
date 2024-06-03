@@ -1,12 +1,9 @@
 #!/usr/bin/env python
 import os
 import sys
-import git
-from jira import JIRAError
 
-from liferay_utils.jira_utils.jira_constants import Transition
-from release_constants import URLs, Filter, Roles
-from utils.liferay_utils.jira_utils.jira_constants import Status
+from release_constants import Filter, Roles
+from utils.liferay_utils.jira_utils.jira_constants import Status, Transition
 from utils.liferay_utils.jira_utils.jira_helpers import get_all_issues
 
 sys.path.append(os.path.join(sys.path[0], 'utils'))
@@ -22,6 +19,7 @@ def update_build_subtask(jira, url_to_release_candidate, release_version):
         parent_task_key = parent_task.key
         parent_task_status = parent_task.get_field("status").name
         jira.assign_issue(parent_task_key, Roles.Release_lead)
+        jira.add_comment(parent_task_key, "Release candidate: " + url_to_release_candidate)
         if parent_task_status == Status.Open:
             jira.transition_issue(parent_task_key, transition=Transition.Selected_for_development)
             jira.transition_issue(parent_task_key, transition=Transition.In_Progress)
