@@ -4,6 +4,8 @@ import sys
 import git
 from jira import JIRAError
 
+from release_constants import URLs
+
 sys.path.append(os.path.join(sys.path[0], 'utils'))
 
 from utils.liferay_utils.jira_utils.jira_helpers import LIFERAY_JIRA_BROWSE_URL
@@ -27,7 +29,7 @@ def get_lps_from_local_repo(jira, repo_path, start_hash, end_hash, release='', l
         message = liferay_portal_ee_repo.commit(commit_hash).message
         lps = message.split(' ')[0].split('\n')[0]
         if message.lower().find('revert') != -1:
-            revered_list.append('https://github.com/liferay/liferay-portal-ee/commit/' + commit_hash)
+            revered_list.append(URLs.Liferay_repo_URL + '/commit/' + commit_hash)
         elif (lps not in lps_list) and ('-' in lps):
             lps_list.append(lps)
 
