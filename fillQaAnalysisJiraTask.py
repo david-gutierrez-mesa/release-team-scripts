@@ -22,6 +22,7 @@ def fill_qa_analysis_jira_task(jira, repo_path, start_hash, end_hash, release_ve
             file_name = FileName.Parent_task_file_name
             with open(file_name, 'w') as archivo:
                 archivo.write(parent_task_key)
+            jira.assign_issue(parent_task_key, Roles.Release_lead)
 
 
 if __name__ == '__main__':
