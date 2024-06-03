@@ -8,7 +8,6 @@ from utils.liferay_utils.jira_utils.jira_liferay import get_jira_connection
 
 
 def fill_qa_analysis_jira_task(jira, repo_path, start_hash, end_hash, release_version=''):
-    lpd_ticket = ''
     if release_version:
         print("Get task from " + release_version)
         jql = 'project = "PUBLIC - Liferay Product Delivery" AND summary ~ "' + release_version + ' QA Analysis"'
