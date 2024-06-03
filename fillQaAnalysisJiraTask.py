@@ -3,6 +3,8 @@ import os
 import sys
 
 from getLpsFromLocalRepo import get_lps_from_local_repo
+from release_constants import Roles, Filter, FileName
+from utils.liferay_utils.jira_utils.jira_constants import Transition, Status
 from utils.liferay_utils.jira_utils.jira_helpers import get_all_issues
 from utils.liferay_utils.jira_utils.jira_liferay import get_jira_connection
 
@@ -10,8 +12,8 @@ from utils.liferay_utils.jira_utils.jira_liferay import get_jira_connection
 def fill_qa_analysis_jira_task(jira, repo_path, start_hash, end_hash, release_version=''):
     if release_version:
         print("Get task from " + release_version)
-        jql = 'project = "PUBLIC - Liferay Product Delivery" AND summary ~ "' + release_version + ' QA Analysis"'
         qa_analysis_tasks = get_all_issues(jira, jql, ["key"])
+        jql = Filter.QA_Analysis_for_release.format(release_version=release_version)
         if len(qa_analysis_tasks) == 1:
             parent_task = qa_analysis_tasks[0].key
             get_lps_from_local_repo(jira, repo_path, start_hash, end_hash, release_version, parent_task)
