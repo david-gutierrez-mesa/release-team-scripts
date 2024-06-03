@@ -23,6 +23,9 @@ def fill_qa_analysis_jira_task(jira, repo_path, start_hash, end_hash, release_ve
             with open(file_name, 'w') as archivo:
                 archivo.write(parent_task_key)
             jira.assign_issue(parent_task_key, Roles.Release_lead)
+            if parent_task_status == Status.Open:
+                jira.transition_issue(parent_task_key, transition=Transition.Selected_for_development)
+                jira.transition_issue(parent_task_key, transition=Transition.In_Progress)
 
 
 if __name__ == '__main__':
