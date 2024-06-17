@@ -2,12 +2,11 @@
 import os
 import sys
 
+sys.path.append(os.path.join(sys.path[0], 'utils'))
+
 from release_constants import Filter, Roles
 from utils.liferay_utils.jira_utils.jira_constants import Status, Transition
 from utils.liferay_utils.jira_utils.jira_helpers import get_all_issues
-
-sys.path.append(os.path.join(sys.path[0], 'utils'))
-
 from utils.liferay_utils.jira_utils.jira_liferay import get_jira_connection
 
 
