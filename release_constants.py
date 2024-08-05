@@ -9,7 +9,7 @@ class Filter:
 
 
 class Roles:
-    Release_lead = 'david.gutierrez'
+    Release_lead = 'bahar.turk'
 
 
 class URLs:
